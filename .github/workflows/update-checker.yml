@@ -42,7 +42,7 @@ jobs:
         event-type: Source Code Update
         client-payload: |
           {
-            "refs": ["refs/heads/main", "refs/heads/r2s"]
+            "refs": ["refs/heads/main"]
           }
 
     - name: Delete workflow runs
