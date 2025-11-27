@@ -40,7 +40,7 @@ jobs:
           swap-storage: true
       
       - name: Cache apt packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /var/cache/apt/archives
           key: ${{ runner.os }}-apt-cache-${{ hashFiles('**/apt/*.list') }}
@@ -71,7 +71,7 @@ jobs:
           sudo chown $USER:$GROUPS /workdir
 
       - name: Cache OpenWrt packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: openwrt/dl
           key: ${{ runner.os }}-openwrt-dl-${{ hashFiles('feeds.conf.default') }}
@@ -107,16 +107,9 @@ jobs:
           if [ -e files ]; then
             mv files openwrt/files
           fi
-
-          if [ "${{ env.OPENWRT_NAME }}" = "redmi_ax6000_openwrt" ]; then
-            echo "Device is redmi_ax6000_openwrt, removing rootfs-resize script..."
-            rm -f openwrt/files/etc/uci-defaults/*rootfs-resize*
-          fi
-
           if [ -e ${{ env.CONFIG_FILE }} ]; then
             mv ${{ env.CONFIG_FILE }} openwrt/.config
           fi
-          
           chmod +x ${{ env.DIY_P2_SH }}
           cd openwrt
           $GITHUB_WORKSPACE/${{ env.DIY_P2_SH }}
@@ -149,6 +142,11 @@ jobs:
           fi
           echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
+      - name: Fix directory permissions
+        run: |
+          sudo chown -R $USER:$GROUPS /workdir/openwrt
+          sudo chown -R $USER:$GROUPS $GITHUB_WORKSPACE/openwrt
+      
       - name: Upload bin directory
         uses: actions/upload-artifact@main
         if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
@@ -203,3 +201,4 @@ jobs:
           delete_tags: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

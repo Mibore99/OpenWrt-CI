@@ -40,7 +40,7 @@ jobs:
           swap-storage: true
       
       - name: Cache apt packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /var/cache/apt/archives
           key: ${{ runner.os }}-apt-cache-${{ hashFiles('**/apt/*.list') }}
@@ -71,7 +71,7 @@ jobs:
           sudo chown $USER:$GROUPS /workdir
 
       - name: Cache OpenWrt packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: openwrt/dl
           key: ${{ runner.os }}-openwrt-dl-${{ hashFiles('feeds.conf.default') }}
@@ -149,6 +149,11 @@ jobs:
           fi
           echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
+      - name: Fix directory permissions
+        run: |
+          sudo chown -R $USER:$GROUPS /workdir/openwrt
+          sudo chown -R $USER:$GROUPS $GITHUB_WORKSPACE/openwrt
+      
       - name: Upload bin directory
         uses: actions/upload-artifact@main
         if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
