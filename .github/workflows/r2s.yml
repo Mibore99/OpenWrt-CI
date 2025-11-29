@@ -154,13 +154,6 @@ jobs:
           sudo chown -R $USER:$GROUPS /workdir/openwrt
           sudo chown -R $USER:$GROUPS $GITHUB_WORKSPACE/openwrt
       
-      - name: Upload bin directory
-        uses: actions/upload-artifact@main
-        if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
-        with:
-          name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-          path: openwrt/bin
-
       - name: Organize files
         id: organize
         if: steps.compile.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true'
@@ -181,7 +174,7 @@ jobs:
         id: tag
         if: steps.compile.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true'
         run: |
-          echo "release_tag=$(date +"%Y.%m.%d-%H%M")-${{ env.OPENWRT_NAME }}" >> $GITHUB_OUTPUT
+          echo "release_tag=r2s" >> $GITHUB_OUTPUT
           echo "status=success" >> $GITHUB_OUTPUT
 
       - name: Upload firmware to release
