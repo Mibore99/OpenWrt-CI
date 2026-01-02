@@ -21,6 +21,8 @@
 - 基于原版openwrt编译
 - 固件默认IP：192.168.1.1 默认密码：password
 
+| 平台+设备名称 | 固件编译状态 | 配置文件 | 固件下载 |
+| :-------------: | :-------------: | :-------------: | :-------------: |
 | [![](https://img.shields.io/badge/OpenWrt-netcore_n60-pro-32C955.svg?logo=openwrt)](https://github.com/Mibore99/OpenWrt-CI/blob/main/.github/workflows/netcore_n60-pro.yml) | [![](https://github.com/Mibore99/OpenWrt-CI/actions/workflows/netcore_n60-pro.yml/badge.svg)](https://github.com/Mibore99/OpenWrt-CI/actions/workflows/netcore_n60-pro.yml) | [![](https://img.shields.io/badge/编译-配置-orange.svg?logo=apache-spark)](https://github.com/Mibore99/OpenWrt-CI/blob/main/netcore_n60-pro.config) | [![](https://img.shields.io/badge/下载-链接-blueviolet.svg?logo=hack-the-box)](https://github.com/Mibore99/OpenWrt-CI/releases/tag/netcore_n60-pro) |
 
 - 基于原版ImmortalWrt编译
