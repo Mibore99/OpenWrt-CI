@@ -1,0 +1,28 @@
+name: Run All Workflows
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  trigger-all:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Trigger all other workflows
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_YAML: run-all.yml
+        run: |
+          cd .github/workflows
+          for file in *.yml; do
+            if [ "$file" != "$CURRENT_YAML" ]; then
+              echo "Triggering $file..."
+              gh workflow run "$file" --ref "${{ github.ref }}" || echo "Failed to trigger $file"
+              sleep 2
+            fi
+          done
