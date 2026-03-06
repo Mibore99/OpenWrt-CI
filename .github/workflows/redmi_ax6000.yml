@@ -1,4 +1,4 @@
-name: redmi_ax6000_openwrt
+name: redmi_ax6000
 
 on:
   repository_dispatch:
@@ -11,14 +11,14 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: openwrt-25.12
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: redmi_ax6000_openwrt.config
+  CONFIG_FILE: redmi_ax6000.config
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part3.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  OPENWRT_NAME: redmi_ax6000_openwrt
+  OPENWRT_NAME: redmi_ax6000
 
 jobs:
   build:
@@ -167,7 +167,7 @@ jobs:
         id: tag
         if: steps.compile.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true'
         run: |
-          echo "release_tag=redmi_ax6000_openwrt" >> $GITHUB_OUTPUT
+          echo "release_tag=redmi_ax6000" >> $GITHUB_OUTPUT
           echo "status=success" >> $GITHUB_OUTPUT
 
       - name: Upload firmware to release
